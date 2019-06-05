@@ -12,7 +12,7 @@ client = spell.client.from_environment()
 ppackages = ["scikit-image","numpy","matplotlib","scipy"]
 apackages = ["python-tk"]
 
-r1=client.runs.new(command="models/fetch_release_models.sh")
+r1=client.runs.new(command="colorization/models/fetch_release_models.sh")
 r1.wait_status(client.runs.COMPLETE)
 
 r2=client.runs.new(pip_packages=ppackages, apt_packages=apackages,attached_resources={"runs/{}/models".format(r1.id):"/mnt/models"},framework="caffe",
