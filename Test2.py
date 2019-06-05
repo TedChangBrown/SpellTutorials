@@ -21,4 +21,4 @@ machine_type="K80",
 command="python colorization/colorize.py -img_in {} -img_out ./output.png --caffemodel /mnt/models/colorization_release_v2.caffemodel".format(photo_path))
 r2.wait_status(client.runs.COMPLETE)
 r2.cp(source_path="output.png", destination_directory=None)
-r3=client.run.new(command="cp output.png ./tutorial_outputs")
+r3=client.runs.new(command="cp output.png ./tutorial_outputs")
