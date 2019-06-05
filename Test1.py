@@ -14,9 +14,6 @@ github_url="https://github.com/affinelayer/pix2pix-tensorflow")
 print("training in run {}".format(r2.id))
 r2.wait_status(client.runs.COMPLETE)
 
-for line in r2.logs():
-    print(line)
-
 r3=client.runs.new(attached_resources={"runs/{}".format(r1.id):"/datasets", "runs/{}".format(r2.id):"/model"},
 command="python pix2pix.py --mode test --output_dir facades_test --input_dir /datasets/facades/val --checkpoint /model/facades_train",
 github_url="https://github.com/affinelayer/pix2pix-tensorflow")
