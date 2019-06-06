@@ -19,7 +19,7 @@ r1.wait_status(client.runs.COMPLETE)
 if photo_path == DEFAULT_PHOTO:
     commit_label = "colorizer"
 else:
-    commit_label = "examples"
+    commit_label = "main"
 
 r2=client.runs.new(commit_label=commit_label,pip_packages=ppackages, apt_packages=apackages,attached_resources={"runs/{}/models".format(r1.id):"/mnt/models"},framework="caffe",
 machine_type="K80",
