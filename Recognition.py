@@ -12,5 +12,5 @@ print("waiting for run {} to finish".format(r1.id))
 r2.wait_status(client.runs.COMPLETE)
 
 r=client.runs.new(machine_type="K80", command="python main.py",cwd="vae",
-attached_resources={"runs/291/data":None}, commit_label=LABEL)
+attached_resources={"runs/{}/data".format(r1.id):None}, commit_label=LABEL)
 r.wait_status(client.runs.COMPLETE)
