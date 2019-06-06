@@ -11,4 +11,4 @@ LABEL="number-recognition"
 # r2.wait_status(client.runs.COMPLETE)
 
 r=client.runs.new(machine_type="K80", command="python vae/main.py",
-attached_resources={"runs/291/data", commit_label=LABEL)
+attached_resources={"runs/291/data":None}, commit_label=LABEL)
