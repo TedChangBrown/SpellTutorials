@@ -4,10 +4,10 @@ client = spell.client.from_environment()
 
 LABEL="number-recognition"
 
-r=client.runs.new(machine_type="K80", commit_label="main", command="python fetch_data.py")
-r=client.runs.new(machine_type="K80", command="python mnist/main.py", commit_label=LABEL)
-print("waiting for run {} to finish".format(r.id))
-r.wait_status(client.runs.COMPLETE)
+r1=client.runs.new(machine_type="K80", commit_label="main", command="python fetch_data.py")
+r2=client.runs.new(machine_type="K80", command="python mnist/main.py", commit_label=LABEL)
+print("waiting for run {} to finish".format(r1.id))
+r2.wait_status(client.runs.COMPLETE)
 
-# r=client.runs.new(machine_type="K80", command="python vae/main.py",
-# attached_resources={"runs/{}/data":"".format(r.id)}, commit_label=LABEL)
+r=client.runs.new(machine_type="K80", command="python vae/main.py",
+attached_resources={"runs/{}/data".format(r1.id):None}, commit_label=LABEL)
