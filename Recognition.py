@@ -10,5 +10,5 @@ LABEL="number-recognition"
 # print("waiting for run {} to finish".format(r1.id))
 # r2.wait_status(client.runs.COMPLETE)
 
-r=client.runs.new(machine_type="K80", command="python vae/main.py",
+r=client.runs.new(machine_type="K80", command="python main.py",
 attached_resources={"runs/291/data":None}, commit_label="number-generation")
