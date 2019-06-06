@@ -14,3 +14,4 @@ r2.wait_status(client.runs.COMPLETE)
 r3=client.runs.new(attached_resources={"runs/{}/nmt_data".format(r.id):"nmt_data","runs/{}/nmt_model".format(r2.id):"nmt_model_tmp"},
 commit_label=LABEL,
 command="tail -n10 nmt_data nmt_data/tst2013.vi > my_infer_file.vi && cp -r nmt_model_tmp nmt_model && python -m nmt.nmt  --out_dir=nmt_model --inference_input_file=my_infer_file.vi --inference_output_file=output_infer && cat output_infer")
+r3.wait_status(client.runs.COMPLETE)
