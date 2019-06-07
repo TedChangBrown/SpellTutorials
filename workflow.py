@@ -53,7 +53,7 @@ def recognition_runs(client):
     r=client.runs.new(machine_type="K80", command="python main.py",cwd="vae",
     attached_resources={"runs/{}/data".format(r1.id):None}, commit_label=LABEL)
     r.wait_status(client.runs.COMPLETE)
-    r2.cp("vae", "tutorial_outputs/number_recognition")
+    r.cp("vae", "tutorial_outputs/number_recognition")
 
 def translation_runs(client):
     print("Starting translation demo")
