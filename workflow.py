@@ -1,5 +1,6 @@
 import argparse
 import spell.client
+import threading
 
 def colorizer_run(client, photo_path):
     print("Starting Colorzation demo")
@@ -80,7 +81,17 @@ p.add_argument("--photo", default=DEFAULT_COLORIZER_PHOTO, help="Name of input p
 
 args = p.parse_args()
 client=spell.client.from_environment()
-colorizer_run(client, "./demo/imgs/"+args.photo)
-p2p_runs(client)
-recognition_runs(client)
-translation_runs(client)
+t1 = threading.Thread(target = colorizer_run, args=(client, "./demo/imgs/"+args.photo))
+t2= threading.Thread(target=p2p_runs, args=(client))
+t3 = threading.Thread(target= recognition_runs, args = (client))
+t4 = threading.Thread(target=translation_runs, args = (client))
+
+t1.start()
+t2.start()
+t3.start()
+t4.start()
+
+t1.join()
+t3.join()
+t4.join()
+t2.join()
