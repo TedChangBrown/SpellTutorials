@@ -1,12 +1,12 @@
 import argparse
 import spell.client
 
-DEFAULT_PHOTO = "./demo/imgs/ansel_adams3.jpg"
+DEFAULT_PHOTO = "ansel_adams3.jpg"
 p = argparse.ArgumentParser()
-p.add_argument("--photo", default=DEFAULT_PHOTO, help="Path to input photo (must be comitted to colorization/demo)")
+p.add_argument("--photo", default=DEFAULT_PHOTO, help="Name of input photo (must be comitted to colorization/demo/images)")
 args = p.parse_args()
 
-photo_path = args.photo
+photo_path = "./demo/imgs/"+args.photo
 
 client = spell.client.from_environment()
 
