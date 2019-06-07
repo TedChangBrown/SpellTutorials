@@ -82,9 +82,9 @@ p.add_argument("--photo", default=DEFAULT_COLORIZER_PHOTO, help="Name of input p
 args = p.parse_args()
 client=spell.client.from_environment()
 t1 = threading.Thread(target = colorizer_run, args=(client, "./demo/imgs/"+args.photo))
-t2= threading.Thread(target=p2p_runs, args=(client))
-t3 = threading.Thread(target= recognition_runs, args = (client))
-t4 = threading.Thread(target=translation_runs, args = (client))
+t2= threading.Thread(target=p2p_runs, args=(client,))
+t3 = threading.Thread(target= recognition_runs, args =(client,))
+t4 = threading.Thread(target=translation_runs, args = (client,))
 
 t1.start()
 t2.start()
