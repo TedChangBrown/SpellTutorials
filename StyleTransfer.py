@@ -23,6 +23,6 @@ command="python style.py --checkpoint-dir ckpt --style {} --style-weight 1.5e2 -
 r.wait_status(client.runs.COMPLETE)
 
 r=client.runs.new(commit_label="StyleTransfer",attached_resources={"runs/{}/ckpt".format(r.id):None},
-machine_type="V100", framework=tensorflow,pip_packages=pip_packages, apt_packages=apt_packages,
+machine_type="V100", framework="tensorflow",pip_packages=pip_packages, apt_packages=apt_packages,
 command="python evaluate.py --checkpoint ckpt --in-path images/input/  --out-path images/output/  --allow-different-dimensions")
 r.wait_status(client.runs.COMPLETE)
