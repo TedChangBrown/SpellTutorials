@@ -1,8 +1,8 @@
 import spell.client
 import argparse
 
-DEFAULT_TRANSFER_PHOTO= "images/input/example-style-transfer.jpg"
-DEFAULT_TRANSFER_STYLE= "images/input/example-photo.jpg"
+DEFAULT_TRANSFER_PHOTO= "images/input/style-transfer-base.jpg"
+DEFAULT_TRANSFER_STYLE= "images/input/style-transfer.jpg"
 STYLE_TRANSFER_LABEL="StyleTransfer"
 p = argparse.ArgumentParser()
 p.add_argument("--transfer_photo", default=DEFAULT_TRANSFER_PHOTO, help="Path to input photo (must be comitted to fast-style-transfer repo)")
