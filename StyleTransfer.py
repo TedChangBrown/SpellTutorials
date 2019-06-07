@@ -14,8 +14,8 @@ apt_packages=["ffmpeg"]
 
 client=spell.client.from_environment()
 
-r=client.runs.new(commit_label="StyleTransfer", command="./setup.sh")
-r.wait_status(client.runs.COMPLETE)
+# r=client.runs.new(commit_label="StyleTransfer", command="./setup.sh")
+# r.wait_status(client.runs.COMPLETE)
 
 r=client.runs.new(attached_resources={"runs/{}/data".format("341"):"datasets"},framework="tensorflow",
 pip_packages=pip_packages, apt_packages=apt_packages,machine_type="V100",commit_label="StyleTransfer",
