@@ -11,4 +11,4 @@ args = p.parse_args()
 
 client=spell.client.from_environment()
 
-r=client.runs.new(commit_label="StyleTransfer", command="setup.sh")
+r=client.runs.new(commit_label="StyleTransfer", command="ls")
