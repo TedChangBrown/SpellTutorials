@@ -17,6 +17,7 @@ def colorizer_run(client, photo_path):
     command="python colorization/colorize.py -img_in {} -img_out ./output.png --caffemodel /mnt/models/colorization_release_v2.caffemodel".format(photo_path))
     print("Colorizing photo in run {}".format(r2.id))
     r2.wait_status(client.runs.COMPLETE)
+    r2.cp("output.png", "tutorial_outputs/colorizer")
 
 def p2p_runs(client):
     print("Starting Pix2Pix Tutorial Demo")
@@ -36,6 +37,7 @@ def p2p_runs(client):
     commit_label="p2p")
     print("testing P2P in run {}".format(r3.id))
     r3.wait_status(client.runs.COMPLETE)
+    r3.cp("facades_test", "tutorial_outputs/p2p")
 
 def recognition_runs(client):
     print("Starting number recognition demo")
@@ -51,6 +53,7 @@ def recognition_runs(client):
     r=client.runs.new(machine_type="K80", command="python main.py",cwd="vae",
     attached_resources={"runs/{}/data".format(r1.id):None}, commit_label=LABEL)
     r.wait_status(client.runs.COMPLETE)
+    r2.cp("vae", "tutorial_outputs/number_recognition")
 
 def translation_runs(client):
     print("Starting translation demo")
@@ -68,11 +71,18 @@ def translation_runs(client):
     commit_label=LABEL,
     command="tail -n10 nmt_data nmt_data/tst2013.vi > my_infer_file.vi && cp -r nmt_model_tmp nmt_model && python -m nmt.nmt  --out_dir=nmt_model --inference_input_file=my_infer_file.vi --inference_output_file=output_infer && cat output_infer")
     r3.wait_status(client.runs.COMPLETE)
+    r3.cp("output_infer", "tutorial_outputs/translation")
 
     r4=client.runs.new(attached_resources={"runs/{}/nmt_data".format(r.id):"nmt_data"},
     commit_label=LABEL,
     command="mkdir nmt_model && export PYTHONIOENCODING=UTF-8 && python -m nmt.nmt  --attention=scaled_luong --src=vi --tgt=en --vocab_prefix=nmt_data/vocab  --train_prefix=nmt_data/train --dev_prefix=nmt_data/tst2012  --test_prefix=nmt_data/tst2013 --out_dir=nmt_attention_model --num_train_steps=12000 --steps_per_stats=100 --num_layers=2 --num_units=128 --dropout=0.2 --metrics=bleu")
     r4.wait_status(client.runs.COMPLETE)
+
+    r5=client.runs.new(attached_resources={"runs/{}/nmt_data".format(r.id):"nmt_data","runs/{}/nmt_model".format(r4.id):"nmt_model_tmp"},
+    commit_label=LABEL,
+    command="tail -n10 nmt_data nmt_data/tst2013.vi > my_infer_file.vi && cp -r nmt_model_tmp nmt_model && python -m nmt.nmt  --out_dir=nmt_model --inference_input_file=my_infer_file.vi --inference_output_file=output_infer && cat output_infer")
+    r5.wait_status(client.runs.COMPLETE)
+    r5.cp("output_infer", "tutorial_outputs/translation")
 
 DEFAULT_COLORIZER_PHOTO = "ansel_adams3.jpg"
 
