@@ -37,7 +37,7 @@ def p2p_runs(client):
     print("testing P2P in run {}".format(r3.id))
     r3.wait_status(client.runs.COMPLETE)
 
-def recognition_run(client):
+def recognition_runs(client):
     print("Starting number recognition demo")
     LABEL="number-recognition"
 
