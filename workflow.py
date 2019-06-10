@@ -84,24 +84,45 @@ def translation_runs(client):
     r5.wait_status(client.runs.COMPLETE)
     r5.cp("output_infer", "tutorial_outputs/translation")
 
+def style_transfer_runs(client, style):
+    print("Starting Style Transfer Demo")
+    r=client.runs.new(commit_label="StyleTransfer", command="./setup.sh")
+    r.wait_status(client.runs.COMPLETE)
+
+    r=client.runs.new(attached_resources={"runs/{}/data".format(r.id):"datasets"},framework="tensorflow",
+    pip_packages=pip_packages, apt_packages=apt_packages,machine_type="V100",commit_label="StyleTransfer",
+    command="python style.py --checkpoint-dir ckpt --style images/style/{} --style-weight 1.5e2 --train-path datasets/train2014 --vgg-path datasets/imagenet-vgg-verydeep-19.mat".format(style))
+    r.wait_status(client.runs.COMPLETE)
+
+    r=client.runs.new(commit_label="StyleTransfer",attached_resources={"runs/{}/ckpt".format(r.id):None},
+    machine_type="V100", framework="tensorflow",pip_packages=pip_packages, apt_packages=apt_packages,
+    command="python evaluate.py --checkpoint ckpt --in-path images/input/  --out-path images/output/  --allow-different-dimensions")
+    r.wait_status(client.runs.COMPLETE)
+    r.cp("images/output", "tutorial_outputs/style_transfer")
+
 DEFAULT_COLORIZER_PHOTO = "ansel_adams3.jpg"
 
 p = argparse.ArgumentParser()
-p.add_argument("--photo", default=DEFAULT_COLORIZER_PHOTO, help="Name of input photo (must be comitted to colorization/demo/images)")
+p.add_argument("--colorizer_photo", default=DEFAULT_COLORIZER_PHOTO, help="Name of input photo (must be comitted to colorization/demo/images)")
+p.add_argument("--style_transfer_runstyle", default="style-transfer-base.jpg",help="Input style for style transfer (name of file inside of fast-style transfer repo in images/style folder)")
 
 args = p.parse_args()
 client=spell.client.from_environment()
-t1 = threading.Thread(target = colorizer_run, args=(client, "./demo/imgs/"+args.photo))
+t1 = threading.Thread(target = colorizer_run, args=(client, "./demo/imgs/"+args.colorizer_photo))
 t2= threading.Thread(target=p2p_runs, args=(client,))
 t3 = threading.Thread(target= recognition_runs, args =(client,))
 t4 = threading.Thread(target=translation_runs, args = (client,))
+t5 = threading.Thread(target=style_transfer_runs, args=(client,args.style_transfer_style))
+
 
 t1.start()
 t2.start()
 t3.start()
 t4.start()
+t5.start()
 
 t1.join()
 t3.join()
 t4.join()
 t2.join()
+t5.join()
