@@ -85,6 +85,9 @@ def translation_runs(client):
     r5.cp("output_infer", "tutorial_outputs/translation")
 
 def style_transfer_runs(client, style):
+    pip_packages= ["moviepy"]
+    apt_packages=["ffmpeg"]
+    
     print("Starting Style Transfer Demo")
     r=client.runs.new(commit_label="StyleTransfer", command="./setup.sh")
     r.wait_status(client.runs.COMPLETE)
