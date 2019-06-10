@@ -104,7 +104,7 @@ DEFAULT_COLORIZER_PHOTO = "ansel_adams3.jpg"
 
 p = argparse.ArgumentParser()
 p.add_argument("--colorizer_photo", default=DEFAULT_COLORIZER_PHOTO, help="Name of input photo (must be comitted to colorization/demo/images)")
-p.add_argument("--style_transfer_runstyle", default="style-transfer-base.jpg",help="Input style for style transfer (name of file inside of fast-style transfer repo in images/style folder)")
+p.add_argument("--style_transfer_style", default="style-transfer-base.jpg",help="Input style for style transfer (name of file inside of fast-style transfer repo in images/style folder)")
 
 args = p.parse_args()
 client=spell.client.from_environment()
