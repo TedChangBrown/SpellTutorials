@@ -87,7 +87,7 @@ def translation_runs(client):
 def style_transfer_runs(client, style):
     pip_packages= ["moviepy"]
     apt_packages=["ffmpeg"]
-    
+
     print("Starting Style Transfer Demo")
     r=client.runs.new(commit_label="StyleTransfer", command="./setup.sh")
     r.wait_status(client.runs.COMPLETE)
@@ -104,10 +104,11 @@ def style_transfer_runs(client, style):
     r.cp("images/output", "tutorial_outputs/style_transfer")
 
 DEFAULT_COLORIZER_PHOTO = "ansel_adams3.jpg"
+DEFAULT_STYLE = "style-transfer-base.jpg"
 
 p = argparse.ArgumentParser()
 p.add_argument("--colorizer_photo", default=DEFAULT_COLORIZER_PHOTO, help="Name of input photo (must be comitted to colorization/demo/images)")
-p.add_argument("--style_transfer_style", default="style-transfer-base.jpg",help="Input style for style transfer (name of file inside of fast-style transfer repo in images/style folder)")
+p.add_argument("--style_transfer_style", default=DEFAULT_STYLE,help="Input style for style transfer (name of file inside of fast-style transfer repo in images/style folder)")
 
 args = p.parse_args()
 client=spell.client.from_environment()
