@@ -1,0 +1,5 @@
+SELECT id,command from runs where command='find me'
+;
+SELECT id,command from runs where command='echo findme'
+;
+\s runs
