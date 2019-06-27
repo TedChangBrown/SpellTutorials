@@ -8,7 +8,7 @@ if __name__ == "__main__":
   num = 0
   step = 0
   for i in range(30):
-    add = (random.random() - 0.5) * float(sys.argv[1])
+    add = 1
     num += add
     positive += add
     positive = max(0, positive)
